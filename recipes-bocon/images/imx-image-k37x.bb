@@ -6,7 +6,13 @@ DESCRIPTION = "K37X Image to validate i.MX8 machines. \
 This image contains everything used to Bocon K37X devices including GUI and applications."
 LICENSE = "MIT"
 
+#inherit core-image
 require recipes-core/images/core-image-minimal.bb
+
+# The root's password is "k37x"
+inherit extrausers
+EXTRA_USERS_PARAMS = "usermod -P k37x root;"
+#EXTRA_USERS_PARAMS = "useradd -P k37x bocon;"
 
 inherit populate_sdk_qt5
 
@@ -18,6 +24,7 @@ FONT_CHINESE = "ttf-droid-sans ttf-droid-sans-fallback ttf-droid-sans-mono ttf-d
 
 ## Select Image Features
 IMAGE_FEATURES += " \
+    debug-tweaks \
     package-management \
     splash \
     nfs-server \
@@ -44,6 +51,7 @@ CORE_IMAGE_EXTRA_INSTALL += " \
 "
 
 IMAGE_INSTALL += " \
+    fsl-rc-local \
     packagegroup-qt5-imx \
     ${FONT_CHINESE} \
 "
